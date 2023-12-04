@@ -3,83 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body, canvas {
-      margin: 0;
-      overflow: hidden;
-      background-color: black;
-    }
-    canvas {
-      display: block;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
   <title>Solar System Simulation</title>
 </head>
 <body>
 
   <canvas id="solarSystemCanvas"></canvas>
 
-  <script>
-    const canvas = document.getElementById('solarSystemCanvas');
-    const ctx = canvas.getContext('2d');
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const sun = { x: canvas.width / 2, y: canvas.height / 2, radius: 50, color: '#FFD700', mass: 10000 };
-    const planets = [
-      { distance: 100, angle: 0, radius: 5, color: '#B97A57', mass: 0.3, speed: 0.02 },
-      { distance: 160, angle: Math.PI / 3, radius: 10, color: '#DAA520', mass: 0.45, speed: 0.012 },
-      { distance: 220, angle: (2 * Math.PI) / 3, radius: 10, color: '#3498db', mass: 5, speed: 0.008 },
-      { distance: 300, angle: Math.PI, radius: 8, color: '#e74c3c', mass: 0.6, speed: 0.005 },
-      { distance: 500, angle: -(Math.PI / 3), radius: 40, color: '#ff6600', mass: 1900, speed: 0.0015 },
-      { distance: 800, angle: Math.PI / 3, radius: 35, color: '#d9bf77', mass: 570, speed: 0.0009 },
-      { distance: 1200, angle: (2 * Math.PI) / 3, radius: 30, color: '#3498db', mass: 87, speed: 0.0006 },
-      { distance: 1600, angle: Math.PI, radius: 25, color: '#2980b9', mass: 100, speed: 0.00045 }
-    ];
-
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#000';
-
-      // Draw the Sun
-      ctx.beginPath();
-      ctx.arc(sun.x, sun.y, sun.radius, 0, Math.PI * 2);
-      ctx.fillStyle = sun.color;
-      ctx.fill();
-      ctx.closePath();
-
-      // Update and draw each planet
-      planets.forEach(planet => {
-        planet.angle += planet.speed;
-        const planetX = sun.x + planet.distance * Math.cos(planet.angle);
-        const planetY = sun.y + planet.distance * Math.sin(planet.angle);
-
-        // Keep planets on the canvas
-        const padding = planet.radius + 5; // Adjust padding as needed
-        const angleFromCenter = Math.atan2(planetY - sun.y, planetX - sun.x);
-        const distanceFromCenter = Math.min(canvas.width / 2 - padding, planet.distance);
-        const adjustedX = sun.x + distanceFromCenter * Math.cos(angleFromCenter);
-        const adjustedY = sun.y + distanceFromCenter * Math.sin(angleFromCenter);
-
-        // Draw the planet
-        ctx.beginPath();
-        ctx.arc(adjustedX, adjustedY, planet.radius, 0, Math.PI * 2);
-        ctx.fillStyle = planet.color;
-        ctx.fill();
-        ctx.closePath();
-      });
-
-      requestAnimationFrame(draw);
-    }
-
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
-
-    draw();
-  </script>
+  <script src="solarSystem.js"></script>
 
 </body>
 </html>
